@@ -81,6 +81,18 @@ if (!env.isTest) {
   }));
 }
 
+function classifyDatabaseError(err) {
+  const message = typeof err.message === 'string' ? err.message.toLowerCase() : '';
+  if (/enotfound|eai_again|getaddrinfo|nodename/.test(message)) return 'DNS_FAILURE';
+  if (/econnrefused|connection refused/.test(message)) return 'CONNECTION_REFUSED';
+  if (/econnreset|connection reset|server closed|connection terminated/.test(message)) return 'CONNECTION_TERMINATED';
+  if (/etimedout|timeout|timed out/.test(message)) return 'CONNECTION_TIMEOUT';
+  if (/ssl|tls|certificate|handshake/.test(message)) return 'TLS_OR_SSL_FAILURE';
+  if (/password authentication|authentication failed|invalid credentials|pg_hba/.test(message)) return 'AUTHENTICATION_FAILURE';
+  if (/permission denied|database does not exist|missing relation|schema/.test(message)) return 'DATABASE_ACCESS_FAILURE';
+  return 'UNKNOWN_DATABASE_ERROR';
+}
+
 app.get('/api/health', async (_req, res) => {
   let database = 'unavailable';
   try {
@@ -89,7 +101,8 @@ app.get('/api/health', async (_req, res) => {
   } catch (err) {
     console.error('[health] database check failed', {
       code: typeof err.code === 'string' ? err.code : 'UNKNOWN',
-      name: typeof err.name === 'string' ? err.name : 'Error'
+      name: typeof err.name === 'string' ? err.name : 'Error',
+      reason: classifyDatabaseError(err)
     });
     database = 'unavailable';
   }
