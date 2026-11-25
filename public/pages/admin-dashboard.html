@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Admin dashboard · Student Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/theme-init.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script type="module" src="/js/admin-dashboard.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="boot-overlay">
+    <div class="boot-overlay__inner">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Preparing your workspace…</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+    <div class="shell-main">
+      <header class="topbar" id="topbar"></header>
+      <main class="page" id="main" tabindex="-1">
+        <div class="page-head">
+          <div class="page-head__text">
+            <p class="breadcrumb">Admin workspace</p>
+            <h1>Academic overview</h1>
+            <p class="page-head__sub">
+              A live view of assessments, estimates and support signals across active students.
+              Every prediction is an estimate from a prototype model — not a decision.
+            </p>
+          </div>
+          <div class="page-head__actions">
+            <a class="btn btn--secondary" href="/pages/analytics.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12" y="8" width="3" height="10" rx="1"/><rect x="17" y="5" width="3" height="13" rx="1"/></svg>
+              Analytics
+            </a>
+            <a class="btn btn--primary" href="/pages/assessments.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              New assessment
+            </a>
+          </div>
+        </div>
+
+        <div class="stat-grid" id="stat-grid" aria-live="polite">
+          <article class="card stat-card"><div class="stat-card__top"><span class="stat-card__label">Students</span></div><div class="stat-card__value skeleton skeleton--text" style="width:70px;height:32px;margin-top:16px"></div></article>
+          <article class="card stat-card"><div class="stat-card__top"><span class="stat-card__label">Assessments</span></div><div class="stat-card__value skeleton skeleton--text" style="width:70px;height:32px;margin-top:16px"></div></article>
+          <article class="card stat-card"><div class="stat-card__top"><span class="stat-card__label">Predictions</span></div><div class="stat-card__value skeleton skeleton--text" style="width:70px;height:32px;margin-top:16px"></div></article>
+          <article class="card stat-card"><div class="stat-card__top"><span class="stat-card__label">Average estimate</span></div><div class="stat-card__value skeleton skeleton--text" style="width:70px;height:32px;margin-top:16px"></div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel span-4" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Average estimate</h2>
+                <p class="panel__subtitle">Latest prediction per active student</p>
+              </div>
+              <span class="badge badge--accent">Live data</span>
+            </div>
+            <div class="panel__body" style="padding-top:8px">
+              <div class="scene-stage scene-stage--sm" id="avg-gauge">
+                <div class="scene-overlay">
+                  <span class="scene-overlay__label">Predicted marks</span>
+                  <span class="scene-overlay__value" id="avg-gauge-value">--</span>
+                  <span class="scene-overlay__sub">out of 100 · prototype estimate</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel span-4" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Support signal mix</h2>
+                <p class="panel__subtitle">Latest assessment per student</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box" style="height:190px">
+                <canvas id="risk-chart" role="img" aria-label="Distribution of low, moderate and high support signals"></canvas>
+              </div>
+              <div class="legend" id="risk-legend" style="margin-top:14px"></div>
+            </div>
+          </section>
+
+          <section class="panel span-4" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Performance bands</h2>
+                <p class="panel__subtitle">Predicted marks categories</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box" style="height:190px">
+                <canvas id="category-chart" role="img" aria-label="Distribution of predicted performance categories"></canvas>
+              </div>
+              <div class="legend" id="category-legend" style="margin-top:14px"></div>
+            </div>
+          </section>
+
+          <section class="panel span-8" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Average estimate over time</h2>
+                <p class="panel__subtitle">Monthly average of saved predictions</p>
+              </div>
+              <span class="badge">Marks / 100</span>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box chart-box--tall" id="trend-wrap">
+                <canvas id="trend-chart" role="img" aria-label="Monthly average predicted marks"></canvas>
+              </div>
+              <div id="trend-empty" class="hidden"></div>
+            </div>
+          </section>
+
+          <section class="panel span-4" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Students to check in with</h2>
+                <p class="panel__subtitle">Highest current support signals</p>
+              </div>
+              <a class="btn btn--ghost btn--sm" href="/pages/risk.html">All</a>
+            </div>
+            <div class="panel__body" id="at-risk-list" style="padding-top:8px">
+              <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+            </div>
+          </section>
+
+          <section class="panel span-8" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Recent assessments</h2>
+                <p class="panel__subtitle">Latest records across all students</p>
+              </div>
+              <a class="btn btn--ghost btn--sm" href="/pages/assessments.html">Open assessments</a>
+            </div>
+            <div class="panel__body" style="padding-top:8px" id="recent-wrap">
+              <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+            </div>
+          </section>
+
+          <section class="panel span-4" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Model snapshot</h2>
+                <p class="panel__subtitle">Stored held-out evaluation</p>
+              </div>
+              <span class="model-badge" title="Prototype trained on public UCI data"><span class="badge-dot"></span> UCI prototype</span>
+            </div>
+            <div class="panel__body" id="model-snapshot">
+              <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading metrics…</div>
+            </div>
+          </section>
+        </div>
+
+        <div class="alert alert--warning mt-4" role="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div>
+            <strong>Prototype model (UCI dataset).</strong> Predictions are estimates, not guarantees. Risk signals
+            describe associations in the prototype data, not causes, and accuracy for university students has not
+            yet been validated. Use these signals to start a supportive conversation — never as a sole basis for
+            academic decisions.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Performance analytics · Student Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/theme-init.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script type="module" src="/js/analytics.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="boot-overlay">
+    <div class="boot-overlay__inner">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Preparing your workspace…</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+    <div class="shell-main">
+      <header class="topbar" id="topbar"></header>
+      <main class="page" id="main" tabindex="-1">
+        <div class="page-head">
+          <div class="page-head__text">
+            <p class="breadcrumb">Admin workspace</p>
+            <h1>Performance analytics</h1>
+            <p class="page-head__sub">
+              Real held-out evaluation metrics from the trained model. Nothing here is invented — if metrics are
+              missing the page says so instead of showing placeholder numbers.
+            </p>
+          </div>
+          <div class="page-head__actions">
+            <a class="btn btn--secondary" href="/pages/admin-dashboard.html">Dashboard</a>
+            <a class="btn btn--primary" href="/pages/ml-metadata.html">Model metadata</a>
+          </div>
+        </div>
+
+        <section class="panel kpi-grid" data-reveal>
+          <div class="card kpi-card" id="kpi-mae">
+            <div class="kpi-card__label">MAE (active model)</div>
+            <div class="kpi-card__value skeleton skeleton--text" style="width:70px;height:26px"></div>
+            <div class="kpi-card__foot">Lower is better</div>
+          </div>
+          <div class="card kpi-card" id="kpi-rmse">
+            <div class="kpi-card__label">RMSE (active model)</div>
+            <div class="kpi-card__value skeleton skeleton--text" style="width:70px;height:26px"></div>
+            <div class="kpi-card__foot">Marks out of 100</div>
+          </div>
+          <div class="card kpi-card" id="kpi-r2">
+            <div class="kpi-card__label">R² (active model)</div>
+            <div class="kpi-card__value skeleton skeleton--text" style="width:70px;height:26px"></div>
+            <div class="kpi-card__foot">Proportion of variance</div>
+          </div>
+          <div class="card kpi-card" id="kpi-dataset">
+            <div class="kpi-card__label">Dataset rows</div>
+            <div class="kpi-card__value skeleton skeleton--text" style="width:70px;height:26px"></div>
+            <div class="kpi-card__foot">UCI held-out evaluation</div>
+          </div>
+        </section>
+
+        <div class="chart-grid" id="chart-grid">
+          <section class="panel span-6" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Model comparison — MAE</h2>
+                <p class="panel__subtitle">Mean absolute error across evaluated models</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box"><canvas id="mae-chart" role="img" aria-label="MAE by model"></canvas></div>
+            </div>
+          </section>
+
+          <section class="panel span-6" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Model comparison — RMSE</h2>
+                <p class="panel__subtitle">Root mean squared error across evaluated models</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box"><canvas id="rmse-chart" role="img" aria-label="RMSE by model"></canvas></div>
+            </div>
+          </section>
+
+          <section class="panel span-6" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Model comparison — R²</h2>
+                <p class="panel__subtitle">Coefficient of determination across evaluated models</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box"><canvas id="r2-chart" role="img" aria-label="R² by model"></canvas></div>
+            </div>
+          </section>
+
+          <section class="panel span-6" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Feature importance</h2>
+                <p class="panel__subtitle">Active model — LinearRegression coefficients</p>
+              </div>
+            </div>
+            <div class="panel__body">
+              <div class="chart-box chart-box--tall"><canvas id="importance-chart" role="img" aria-label="Feature importance"></canvas></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel mt-4 span-12" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Evaluation table</h2>
+              <p class="panel__subtitle">Stored held-out metrics — real results only</p>
+            </div>
+            <span class="badge">Stored metrics</span>
+          </div>
+          <div class="panel__body" id="metrics-table-wrap" style="padding-top:8px">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading metrics…</div>
+          </div>
+        </section>
+
+        <section class="panel mt-4 span-12" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Dataset and transformations</h2>
+              <p class="panel__subtitle">How UCI records were mapped to model inputs</p>
+            </div>
+          </div>
+          <div class="panel__body" id="dataset-info">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading dataset info…</div>
+          </div>
+        </section>
+
+        <div class="alert alert--warning mt-4" role="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div>
+            <strong>Honesty note.</strong> These metrics come from the stored model evaluation on held-out secondary-school
+            data. They describe performance in that dataset only. Accuracy for university students has not yet been validated,
+            and this prototype must not be used for high-stakes academic decisions.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "model_version": "uci-proto-20261123-linearregression",
+  "active_model": "LinearRegression",
+  "model_type": "regression (marks out of 100)",
+  "is_prototype": true,
+  "is_mock": false,
+  "university_validated": false,
+  "dataset": {
+    "name": "UCI Student Performance (student-mat + student-por)",
+    "source": "https://archive.ics.uci.edu/dataset/320/student+performance",
+    "rows": 1044,
+    "train_rows": 835,
+    "test_rows": 209,
+    "split": "GroupShuffleSplit by student demographics (20% held out)",
+    "population": "Secondary-school students in Portugal",
+    "target": "G3 final grade, scaled from 0-20 to 0-100"
+  },
+  "features": [
+    {
+      "key": "attendance",
+      "label": "Attendance",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "help": "Percentage of scheduled classes attended."
+    },
+    {
+      "key": "internal_marks",
+      "label": "Internal marks",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "help": "Current internal assessment score, normalised to 0-100."
+    },
+    {
+      "key": "study_hours",
+      "label": "Study hours / week",
+      "unit": "h",
+      "min": 0,
+      "max": 168,
+      "step": 0.5,
+      "help": "Self-reported study hours in a typical week."
+    },
+    {
+      "key": "previous_marks",
+      "label": "Previous marks",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "help": "Most recent previous result, normalised to 0-100."
+    }
+  ],
+  "target": {
+    "key": "predicted_marks",
+    "label": "Predicted marks",
+    "min": 0,
+    "max": 100
+  },
+  "transformations": [
+    "attendance = 100 * (1 - absences / 30), clipped to 0-100",
+    "internal_marks = UCI G1 * 5",
+    "study_hours = UCI studytime category midpoint (2, 4, 7 or 12 hours/week)",
+    "previous_marks = UCI G2 * 5",
+    "target = UCI G3 * 5"
+  ],
+  "disclaimer": "Prototype model trained on the public UCI secondary-school dataset. Predictions are estimates, not guarantees. Accuracy for university students has not yet been validated. Relationships are associations, not causes.",
+  "trained_at": "2026-11-23T19:01:00.867478+00:00",
+  "artifact": "student_performance_model.joblib"
+}

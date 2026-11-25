@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Reports · Student Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/theme-init.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="/js/reports.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="boot-overlay">
+    <div class="boot-overlay__inner">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Preparing your workspace…</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+    <div class="shell-main">
+      <header class="topbar" id="topbar"></header>
+      <main class="page" id="main" tabindex="-1">
+        <div class="page-head">
+          <div class="page-head__text">
+            <p class="breadcrumb" id="report-breadcrumb">Admin workspace</p>
+            <h1>Student reports</h1>
+            <p class="page-head__sub">
+              Generate and download a PDF report for a student. Reports include the latest prediction, the inputs
+              that produced it, triggered risk rules, recommendations and the stored model evaluation.
+            </p>
+          </div>
+          <div class="page-head__actions">
+            <a class="btn btn--secondary" href="/pages/admin-dashboard.html">Dashboard</a>
+          </div>
+        </div>
+
+        <div class="reports-layout">
+          <section class="panel report-panel" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Generate report</h2>
+                <p class="panel__subtitle" id="report-subtitle">Select a student to preview their latest assessment</p>
+              </div>
+            </div>
+            <div class="panel__body" id="report-form-wrap">
+              <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading students…</div>
+            </div>
+          </section>
+
+          <section class="panel" data-reveal>
+            <div class="panel__header">
+              <div>
+                <h2 class="panel__title">Report preview</h2>
+                <p class="panel__subtitle">The PDF matches this summary</p>
+              </div>
+            </div>
+            <div class="panel__body" id="report-preview">
+              <div class="report-preview">
+                <div class="empty-state">
+                  <div class="empty-state__icon">${icon('file')}</div>
+                  <h3>No report selected</h3>
+                  <p>Choose a student from the list to see a preview and download their PDF report.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <section class="panel mt-4 span-12" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Quick reports</h2>
+              <p class="panel__subtitle">Recently assessed students</p>
+            </div>
+          </div>
+          <div class="panel__body" id="quick-reports" style="padding-top:8px">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+          </div>
+        </section>
+
+        <div class="alert alert--warning mt-4" role="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div>
+            <strong>Report contents are estimates.</strong> The PDF repeats the same prototype disclaimers shown in the
+            app: predictions are not guarantees, risk indicators describe associations not causes, and accuracy for
+            university students has not yet been validated.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

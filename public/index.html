@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Student Signal is a student performance prediction and academic risk analysis prototype. Estimates support early, supportive intervention — they are not guarantees.">
+  <meta name="robots" content="noindex">
+  <title>Student Signal · Performance &amp; risk, honestly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/landing.css">
+  <script src="/js/theme-init.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="/js/landing.js"></script>
+</head>
+<body class="landing-body">
+  <a class="skip-link" href="#auth">Skip to sign in</a>
+
+  <header class="landing-nav" id="landing-nav">
+    <a class="brand" href="/" aria-label="Student Signal home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9 12 4 2 9l10 5 10-5Z"/><path d="M6 11.5V17c0 1 2.7 3 6 3s6-2 6-3v-5.5"/><path d="M22 9v6"/></svg>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">Student Signal</span>
+        <span class="brand__tag">Performance &amp; risk</span>
+      </span>
+    </a>
+    <nav class="landing-nav__links" aria-label="Landing navigation">
+      <a href="#how-it-works">How it works</a>
+      <a href="#honesty">Honest by design</a>
+      <a href="#security">Security</a>
+    </nav>
+    <div class="landing-nav__actions">
+      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme"></button>
+      <a class="btn btn--ghost" href="#how-it-works">Explore</a>
+      <a class="btn btn--primary" href="#auth">Sign in</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__canvas" data-scene="network" aria-hidden="true"></div>
+      <span class="hero__glow hero__glow--one" aria-hidden="true"></span>
+      <span class="hero__glow hero__glow--two" aria-hidden="true"></span>
+
+      <div class="container hero__inner">
+        <div class="hero__copy">
+          <span class="hero__eyebrow"><span class="badge-dot"></span> Academic early-warning · prototype</span>
+          <h1 id="hero-title">See the signal.<br><span class="gradient-text">Support the student.</span></h1>
+          <p class="hero__lede">
+            Attendance, internal marks, study time and previous results combine into an estimated mark and a
+            supportive risk signal. Staff get a clear next step; students get context — never a permanent label.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#auth">
+              Open the dashboard
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn--secondary btn--lg" href="#how-it-works">How it works</a>
+          </div>
+          <div class="hero__chips">
+            <span class="hero__chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Trained on 1,044 public UCI records
+            </span>
+            <span class="hero__chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Group-held-out evaluation
+            </span>
+            <span class="hero__chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Transparent risk rules
+            </span>
+          </div>
+        </div>
+
+        <section class="auth-card" id="auth" aria-labelledby="auth-title">
+          <div class="auth-card__head">
+            <h2 class="auth-card__title" id="auth-title">Welcome back</h2>
+            <p class="auth-card__sub" id="auth-sub">Sign in to review assessments, estimates and support plans.</p>
+          </div>
+
+          <div class="auth-tabs" role="tablist" aria-label="Account access">
+            <button class="auth-tab" type="button" role="tab" id="tab-login" aria-selected="true" aria-controls="panel-login">Sign in</button>
+            <button class="auth-tab" type="button" role="tab" id="tab-register" aria-selected="false" aria-controls="panel-register" tabindex="-1">Create account</button>
+          </div>
+
+          <div class="auth-card__body">
+            <div id="signed-in-panel" class="signed-in-card hidden" aria-live="polite">
+              <div class="alert alert--success" style="display:flex">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>
+                <div>You are already signed in as <strong data-signed-in-name>—</strong>.</div>
+              </div>
+              <div class="signed-in-card__actions">
+                <a class="btn btn--primary btn--block" href="/pages/admin-dashboard.html" data-dashboard-link>Go to dashboard</a>
+                <button class="btn btn--secondary btn--block" type="button" data-logout>Sign out</button>
+              </div>
+            </div>
+
+            <div id="panel-login" class="auth-panel" role="tabpanel" aria-labelledby="tab-login">
+              <div class="alert alert--danger auth-alert" data-auth-alert role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span data-auth-alert-text></span>
+              </div>
+              <form id="login-form" novalidate autocomplete="on">
+                <div class="field">
+                  <label for="login-email">Email address</label>
+                  <input class="input" id="login-email" name="email" type="email" autocomplete="email"
+                    placeholder="you@institution.edu" required maxlength="255">
+                  <span class="field__error" data-error-for="email"></span>
+                </div>
+                <div class="field">
+                  <label for="login-password">Password</label>
+                  <div class="input-group">
+                    <input class="input" id="login-password" name="password" type="password"
+                      autocomplete="current-password" placeholder="Your password" required maxlength="200">
+                    <button class="input-group__action" type="button" data-toggle-password="login-password" aria-label="Show password">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                  <span class="field__error" data-error-for="password"></span>
+                </div>
+                <button class="btn btn--primary btn--block" type="submit" id="login-submit">
+                  Sign in securely
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+                <div class="auth-card__meta">
+                  <span>Access is limited to approved accounts.</span>
+                  <a href="#register-note" data-switch-register>Need an account?</a>
+                </div>
+              </form>
+            </div>
+
+            <div id="panel-register" class="auth-panel hidden" role="tabpanel" aria-labelledby="tab-register">
+              <div class="alert alert--danger auth-alert" data-auth-alert role="alert">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span data-auth-alert-text></span>
+              </div>
+              <form id="register-form" novalidate>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="reg-full-name">Full name</label>
+                    <input class="input" id="reg-full-name" name="full_name" type="text" autocomplete="name"
+                      placeholder="Aarav Sharma" required maxlength="120">
+                    <span class="field__error" data-error-for="full_name"></span>
+                  </div>
+                  <div class="field">
+                    <label for="reg-username">Username</label>
+                    <input class="input" id="reg-username" name="username" type="text" autocomplete="username"
+                      placeholder="aarav.sharma" required minlength="3" maxlength="50">
+                    <span class="field__error" data-error-for="username"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="reg-email">Email address</label>
+                  <input class="input" id="reg-email" name="email" type="email" autocomplete="email"
+                    placeholder="you@institution.edu" required maxlength="255">
+                  <span class="field__error" data-error-for="email"></span>
+                </div>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="reg-enrollment">Enrollment no.</label>
+                    <input class="input" id="reg-enrollment" name="enrollment_no" type="text"
+                      placeholder="ENR-2026-014" required maxlength="40">
+                    <span class="field__error" data-error-for="enrollment_no"></span>
+                  </div>
+                  <div class="field">
+                    <label for="reg-course">Course</label>
+                    <input class="input" id="reg-course" name="course" type="text"
+                      placeholder="B.Tech CSE" required maxlength="100">
+                    <span class="field__error" data-error-for="course"></span>
+                  </div>
+                </div>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="reg-semester">Semester</label>
+                    <select class="select" id="reg-semester" name="semester" required>
+                      <option value="">Select semester</option>
+                      <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                      <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                      <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+                      <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                    </select>
+                    <span class="field__error" data-error-for="semester"></span>
+                  </div>
+                  <div class="field">
+                    <label for="reg-section">Section <span class="text-muted">(optional)</span></label>
+                    <input class="input" id="reg-section" name="section" type="text" placeholder="A" maxlength="20">
+                    <span class="field__error" data-error-for="section"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="reg-password">Password</label>
+                  <div class="input-group">
+                    <input class="input" id="reg-password" name="password" type="password"
+                      autocomplete="new-password" placeholder="At least 8 characters, letters and numbers"
+                      required minlength="8" maxlength="72">
+                    <button class="input-group__action" type="button" data-toggle-password="reg-password" aria-label="Show password">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                  </div>
+                  <div class="password-strength" id="password-strength" data-score="0" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                  <span class="field__error" data-error-for="password"></span>
+                </div>
+                <button class="btn btn--primary btn--block" type="submit" id="register-submit">
+                  Request an account
+                </button>
+                <p class="auth-card__legal" id="register-note">
+                  New student accounts stay inactive until an administrator approves them.
+                  By registering you agree that predictions are estimates for support planning, not academic decisions.
+                </p>
+              </form>
+
+              <div class="auth-success hidden" id="register-success" role="status">
+                <div class="auth-success__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                </div>
+                <h3>Registration received</h3>
+                <p>An administrator must approve your account before you can sign in. You can close this page or switch back to sign in later.</p>
+                <button class="btn btn--secondary" type="button" data-back-to-login>Back to sign in</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <a class="hero__scroll" href="#how-it-works" aria-label="Scroll to how it works">
+        Scroll
+        <span class="hero__scroll-line" aria-hidden="true"></span>
+      </a>
+    </section>
+
+    <section class="landing-section" id="how-it-works" aria-labelledby="how-title">
+      <div class="container">
+        <div class="section-head-row">
+          <div>
+            <span class="section-kicker">A short, honest loop</span>
+            <h2 class="section-title" id="how-title">From assessment to a supportive next step.</h2>
+            <p class="section-lede">
+              The system does not replace academic judgement. It turns four routine data points into an estimate,
+              explains which transparent rules fired, and suggests one or two realistic actions.
+            </p>
+          </div>
+          <a class="btn btn--secondary" href="#auth">Get started</a>
+        </div>
+
+        <div class="steps-grid">
+          <article class="card step-card" data-reveal data-tilt>
+            <span class="step-card__line" aria-hidden="true"></span>
+            <span class="step-card__num">01 · ASSESS</span>
+            <div class="step-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h6M9 8h2"/></svg>
+            </div>
+            <h3>Record what already exists</h3>
+            <p>Attendance, internal marks, weekly study time and previous marks — the same inputs the model was trained on. No extra surveillance.</p>
+          </article>
+
+          <article class="card step-card" data-reveal data-tilt>
+            <span class="step-card__line" aria-hidden="true"></span>
+            <span class="step-card__num">02 · ESTIMATE</span>
+            <div class="step-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4A3.5 3.5 0 0 0 6 7.5c-1.7.5-3 2-3 3.9 0 1.4.7 2.6 1.8 3.3A3.5 3.5 0 0 0 8 20a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 9.5 4Z"/><path d="M14.5 4A3.5 3.5 0 0 1 18 7.5c1.7.5 3 2 3 3.9 0 1.4-.7 2.6-1.8 3.3A3.5 3.5 0 0 1 16 20a3.5 3.5 0 0 1-3.5-3.5v-9A3.5 3.5 0 0 1 14.5 4Z"/></svg>
+            </div>
+            <h3>Estimate, then explain</h3>
+            <p>A regression model estimates marks out of 100. Transparent rules add context, and every result carries the prototype badge and a plain-language disclaimer.</p>
+          </article>
+
+          <article class="card step-card" data-reveal data-tilt>
+            <span class="step-card__line" aria-hidden="true"></span>
+            <span class="step-card__num">03 · SUPPORT</span>
+            <div class="step-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg>
+            </div>
+            <h3>Agree one small step</h3>
+            <p>Recommendations focus on attendance barriers, targeted revision, assignment pacing, participation options and study routines — supportive, never punitive.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section" id="honesty" aria-labelledby="honesty-title">
+      <div class="container">
+        <span class="section-kicker">Honest by design</span>
+        <h2 class="section-title" id="honesty-title">What this prototype is — and what it is not.</h2>
+        <p class="section-lede">
+          Early-warning tools can help when they are careful. We state the limits plainly, show real stored metrics,
+          and never present a mock or fabricated result as model output.
+        </p>
+
+        <div class="honesty-grid">
+          <div class="honesty-list">
+            <div class="honesty-item" data-reveal>
+              <span class="honesty-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+              </span>
+              <div>
+                <h3>Prototype model (UCI dataset)</h3>
+                <p>Trained on 1,044 secondary-school records from Portugal. Accuracy for university students has not yet been validated — treat every estimate as a conversation starter.</p>
+              </div>
+            </div>
+            <div class="honesty-item" data-reveal>
+              <span class="honesty-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+              </span>
+              <div>
+                <h3>Associations, not causes</h3>
+                <p>Attendance and study time are correlated with outcomes in this dataset. That does not mean they cause a mark, and it does not justify a punitive response.</p>
+              </div>
+            </div>
+            <div class="honesty-item" data-reveal>
+              <span class="honesty-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </span>
+              <div>
+                <h3>Support, not a label</h3>
+                <p>Risk levels are early-warning signals. They describe the current assessment only, expire with the next one, and are worded to invite support rather than judgement.</p>
+              </div>
+            </div>
+            <div class="honesty-item" data-reveal>
+              <span class="honesty-item__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg>
+              </span>
+              <div>
+                <h3>Real metrics only</h3>
+                <p>Model comparisons on the analytics page come from the stored evaluation of the trained artifacts. If metrics are missing, the interface says so instead of inventing numbers.</p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="quote-card" data-reveal>
+            <span class="quote-card__mark" aria-hidden="true">&ldquo;</span>
+            <blockquote>
+              The point of an early-warning signal is not to decide a student's future. It is to make it easier for
+              someone to ask, <em>“what would help this week?”</em>
+            </blockquote>
+            <cite>Design principle · Student Signal prototype</cite>
+            <div class="quote-card__badge">
+              <span class="model-badge"><span class="badge-dot"></span> Prototype model (UCI dataset)</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section landing-section--tight" id="security" aria-labelledby="security-title">
+      <div class="container">
+        <div class="security-panel">
+          <div>
+            <span class="section-kicker">Server-side by default</span>
+            <h2 id="security-title">Secrets stay on the server.</h2>
+            <p>
+              The browser never receives database credentials or model internals. Sessions use a signed JWT in an
+              httpOnly, sameSite cookie; passwords are hashed with bcrypt; login attempts are rate-limited.
+              Every API query is parameterised, and students can only reach their own records.
+            </p>
+            <div class="flex gap-3 flex-wrap mt-6">
+              <a class="btn btn--primary" href="#auth">Sign in to continue</a>
+              <a class="btn btn--secondary" href="#how-it-works">Read the workflow</a>
+            </div>
+          </div>
+          <div class="security-list">
+            <div class="security-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <div><strong>httpOnly session cookie</strong><span>JWT is not readable by page scripts.</span></div>
+            </div>
+            <div class="security-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <div><strong>bcrypt password hashing</strong><span>Cost factor 12; generic bad-credentials message.</span></div>
+            </div>
+            <div class="security-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <div><strong>Role and ownership checks</strong><span>Admin-only routes; students see only their own data.</span></div>
+            </div>
+            <div class="security-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              <div><strong>Approval before access</strong><span>New registrations remain inactive until approved.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section landing-section--tight" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <div>
+            <h2 id="cta-title">A clearer signal for a timely check-in.</h2>
+            <p>Sign in as an administrator to manage students and assessments, or as a student to review your own estimate and support plan.</p>
+          </div>
+          <div class="cta-band__actions">
+            <a class="btn btn--primary" href="#auth">Sign in</a>
+            <a class="btn btn--secondary" href="#honesty">Read the limits</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="landing-footer__inner">
+        <div>
+          <a class="brand" href="/" style="padding:0">
+            <span class="brand__mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9 12 4 2 9l10 5 10-5Z"/><path d="M6 11.5V17c0 1 2.7 3 6 3s6-2 6-3v-5.5"/><path d="M22 9v6"/></svg>
+            </span>
+            <span class="brand__text">
+              <span class="brand__name">Student Signal</span>
+              <span class="brand__tag">Performance &amp; risk</span>
+            </span>
+          </a>
+          <p class="landing-footer__text" style="margin-top:14px">
+            Student Performance Prediction &amp; Academic Risk Analysis System. A prototype for supportive
+            early-warning workflows. Predictions are estimates, not guarantees, and accuracy for university
+            students has not yet been validated.
+          </p>
+        </div>
+        <nav class="landing-footer__links" aria-label="Footer">
+          <a href="#how-it-works">How it works</a>
+          <a href="#honesty">Model limits</a>
+          <a href="#security">Security</a>
+          <a href="#auth">Sign in</a>
+        </nav>
+      </div>
+      <div class="landing-footer__bottom">
+        <span>Prototype model (UCI dataset) · not for high-stakes decisions.</span>
+        <span>&copy; <span data-current-year>2026</span> Student Signal</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>

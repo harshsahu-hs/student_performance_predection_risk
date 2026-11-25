@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Model metadata · Student Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <script src="/js/theme-init.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="module" src="/js/ml-metadata.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="boot-overlay">
+    <div class="boot-overlay__inner">
+      <div class="spinner" aria-hidden="true"></div>
+      <span>Preparing your workspace…</span>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation"></aside>
+    <div class="shell-main">
+      <header class="topbar" id="topbar"></header>
+      <main class="page" id="main" tabindex="-1">
+        <div class="page-head">
+          <div class="page-head__text">
+            <p class="breadcrumb">Admin workspace · Analytics</p>
+            <h1>Model metadata</h1>
+            <p class="page-head__sub">
+              The active prototype model's feature definitions, transformations and dataset provenance — loaded from
+              the Python service when available, otherwise from the stored evaluation record.
+            </p>
+          </div>
+          <div class="page-head__actions">
+            <a class="btn btn--secondary" href="/pages/analytics.html">Back to analytics</a>
+          </div>
+        </div>
+
+        <section class="panel" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Model identity</h2>
+              <p class="panel__subtitle" id="model-identity-sub">Loading…</p>
+            </div>
+            <span class="model-badge" id="metadata-badge"><span class="badge-dot"></span> UCI prototype</span>
+          </div>
+          <div class="panel__body" id="model-identity">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+          </div>
+        </section>
+
+        <section class="panel mt-4" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Features</h2>
+              <p class="panel__subtitle">Exactly the inputs the prediction form accepts</p>
+            </div>
+          </div>
+          <div class="panel__body" id="features-wrap">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+          </div>
+        </section>
+
+        <section class="panel mt-4" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Prototype transformations</h2>
+              <p class="panel__subtitle">How UCI records were mapped to model inputs</p>
+            </div>
+          </div>
+          <div class="panel__body" id="transformations-wrap">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+          </div>
+        </section>
+
+        <section class="panel mt-4" data-reveal>
+          <div class="panel__header">
+            <div>
+              <h2 class="panel__title">Target</h2>
+              <p class="panel__subtitle">What the model estimates</p>
+            </div>
+          </div>
+          <div class="panel__body" id="target-wrap">
+            <div class="loading-block"><span class="spinner" aria-hidden="true"></span> Loading…</div>
+          </div>
+        </section>
+
+        <div class="alert alert--warning mt-4" role="note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div>
+            <strong>Prototype model (UCI dataset).</strong> Predictions are estimates, not guarantees. Risk indicators
+            describe associations in the prototype data, not causes, and accuracy for university students has not yet
+            been validated. Feature definitions shown here are those used by the active model.
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-region" aria-live="polite" aria-atomic="false"></div>
+</body>
+</html>
