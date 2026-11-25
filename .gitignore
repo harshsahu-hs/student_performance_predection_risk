@@ -1,0 +1,31 @@
+# Secrets - never commit
+.env
+.env.*
+!.env.example
+.insforge/
+*.pem
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# ML artefacts that are large / generated locally
+ml-service/student/
+ml-service/data/
+ml-service/.venv/
+ml-service/artifacts/*.joblib
+
+# Logs and temp
+logs/
+*.log
+npm-debug.log*
+coverage/
+.DS_Store
+Thumbs.db
+
+# Outputs
+reports/
+tmp/
