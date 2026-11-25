@@ -86,7 +86,11 @@ app.get('/api/health', async (_req, res) => {
   try {
     await query('SELECT 1');
     database = 'connected';
-  } catch {
+  } catch (err) {
+    console.error('[health] database check failed', {
+      code: typeof err.code === 'string' ? err.code : 'UNKNOWN',
+      name: typeof err.name === 'string' ? err.name : 'Error'
+    });
     database = 'unavailable';
   }
   res.status(database === 'connected' ? 200 : 503).json({
