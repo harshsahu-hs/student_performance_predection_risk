@@ -1,4 +1,4 @@
-const env = require('../config/env');
+const { isAllowedOrigin } = require('../utils/origins');
 
 function sameOrigin(req, _res, next) {
   if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) return next();
@@ -8,12 +8,7 @@ function sameOrigin(req, _res, next) {
   if (!candidates.length) return next(); // non-browser client (curl/server-to-server)
 
   for (const value of candidates) {
-    try {
-      const url = new URL(value);
-      if (env.allowedOrigins.includes(url.origin)) return next();
-    } catch {
-      return next(Object.assign(new Error('Invalid request origin.'), { status: 403, code: 'FORBIDDEN' }));
-    }
+    if (isAllowedOrigin(value)) return next();
   }
   return next(Object.assign(new Error('Cross-origin request blocked.'), { status: 403, code: 'FORBIDDEN' }));
 }

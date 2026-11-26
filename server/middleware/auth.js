@@ -103,10 +103,11 @@ function signToken(user) {
 }
 
 function cookieOptions() {
+  const sameSite = env.cookieSameSite;
   return {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: env.cookieSecure,
+    sameSite,
+    secure: sameSite === 'none' ? true : env.cookieSecure,
     path: '/'
   };
 }

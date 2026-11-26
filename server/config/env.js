@@ -43,7 +43,6 @@ if (!isTest) {
 }
 
 const appOrigin = process.env.APP_ORIGIN || 'http://localhost:3000';
-const allowedOrigins = appOrigin.split(',').map((s) => s.trim()).filter(Boolean);
 
 module.exports = {
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -51,7 +50,6 @@ module.exports = {
   isProduction: process.env.NODE_ENV === 'production',
   port: int(process.env.PORT, 3000),
   appOrigin,
-  allowedOrigins,
   databaseUrl,
   dbSchema,
   dbSslMode: process.env.DB_SSL || 'require',
@@ -60,6 +58,8 @@ module.exports = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '8h',
   cookieName: 'sp_token',
   cookieSecure: bool(process.env.COOKIE_SECURE, process.env.NODE_ENV === 'production'),
+  cookieSameSite: (process.env.COOKIE_SAMESITE || 'lax').toLowerCase(),
+  trustProxy: bool(process.env.TRUST_PROXY, false),
   admin: {
     email: (process.env.ADMIN_EMAIL || '').trim().toLowerCase(),
     password: process.env.ADMIN_PASSWORD || '',

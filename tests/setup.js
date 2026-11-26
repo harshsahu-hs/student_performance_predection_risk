@@ -33,8 +33,14 @@ async function truncateTables() {
   // Truncate all app tables in dependency order, restarting identities so IDs
   // stay predictable across tests.
   await query(`TRUNCATE TABLE ${TABLES.join(', ')} RESTART IDENTITY CASCADE`);
-  // Re-seed the admin user and stored metrics after truncation.
-  await seedAdmin();
+  // Re-seed the admin user and stored metrics after truncation. seedAdmin is
+  // idempotent (upsert by email/username); if a unique-constraint violation
+  // surfaces because the admin row already exists, treat it as a no-op.
+  try {
+    await seedAdmin();
+  } catch (err) {
+    if (err.code !== '23505') throw err;
+  }
   await seedMetrics();
 }
 

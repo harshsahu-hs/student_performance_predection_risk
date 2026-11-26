@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: student-performance-node-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production

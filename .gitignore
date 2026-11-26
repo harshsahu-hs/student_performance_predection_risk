@@ -37,7 +37,7 @@ tmp/
 .tmp-debug*.js
 .tmp-e2e.js
 
-# Local testing and utility scripts
-reset-pw.js
-test-login.js
-test-pw.js
+# Local testing and utility scripts (root level only)
+/reset-pw.js
+/test-login.js
+/test-pw.js

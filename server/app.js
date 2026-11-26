@@ -6,6 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const env = require('./config/env');
+const { isAllowedOrigin } = require('./utils/origins');
 const { query, closePool } = require('./config/db');
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
@@ -20,7 +21,7 @@ const { sameOrigin } = require('./middleware/sameOrigin');
 
 const app = express();
 app.disable('x-powered-by');
-if (env.isProduction) app.set('trust proxy', 1);
+if (env.isProduction || env.trustProxy) app.set('trust proxy', 1);
 
 app.use((req, res, next) => {
   req.id = crypto.randomUUID();
@@ -52,7 +53,7 @@ app.use(helmet({
 const corsOptions = {
   credentials: true,
   origin(origin, callback) {
-    if (!origin || env.allowedOrigins.includes(origin)) return callback(null, true);
+    if (!origin || isAllowedOrigin(origin)) return callback(null, true);
     return callback(null, false);
   },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -63,8 +64,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use((req, res, next) => {
   const origin = req.get('origin');
-  if (origin && !env.allowedOrigins.includes(origin)) {
-    return res.status(403).json({ error: { code: 'FORBIDDEN', message: 'Origin is not allowed.' } });
+  if (origin && !isAllowedOrigin(origin)) {
+    // Log server-side without secrets.
+    console.error('[origin] rejected origin:', origin);
+    const message = env.isProduction ? 'Origin is not allowed.' : `Origin is not allowed: ${origin}`;
+    return res.status(403).json({ error: { code: 'FORBIDDEN', message } });
   }
   return next();
 });
